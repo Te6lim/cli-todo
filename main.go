@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 
+	"github.com/te6lim/whattodo/database"
+	"github.com/te6lim/whattodo/database/interfaces"
 	"github.com/te6lim/whattodo/models"
-	"github.com/te6lim/whattodo/storage"
 )
 
 func main() {
 	fmt.Println("here we go again...")
-	var database storage.TodoStorage = &storage.TodoDB{}
+	var database interfaces.TodoStorage = &database.TodoDB{}
 
 	fmt.Println("inserting into todo db...")
 	database.InsertTodo(models.Todo{
