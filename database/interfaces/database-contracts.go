@@ -6,8 +6,8 @@ import(
 
 type TodoStorage interface {
 	InsertTodo(todo models.Todo)
-	DeleteTodo(id int)
-	UpdateTodo(id int, todo models.Todo)
-	GetTodo(id int) (models.Todo, error)
+	DeleteTodo(id int64)
+	UpdateTodo(id int64, todo models.Todo)
+	GetTodo(id int64) (models.Todo, error)
 	GetAllTodos() ([]models.Todo)
 }
