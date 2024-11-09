@@ -26,7 +26,7 @@ func GetTodo(responseWriter http.ResponseWriter, request *http.Request) {
 	parameters := mux.Vars(request)
 	todoId, err := strconv.ParseInt(parameters[params.TodoId], 0, 0)
 	if err != nil {
-		log.Fatal("unable to parse json")
+		responseWriter.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	todo, err := database.TodoDatabase.GetTodo(todoId)
@@ -46,7 +46,6 @@ func CreateTodo(responseWriter http.ResponseWriter, request *http.Request) {
 
 	body, err := io.ReadAll(request.Body)
 	if err != nil {
-		log.Fatal("error reading request body")
 		responseWriter.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -59,18 +58,59 @@ func CreateTodo(responseWriter http.ResponseWriter, request *http.Request) {
 
 	res, err := json.Marshal(todo)
 	if err != nil {
-		fmt.Println("unable to convert todo object ot json")
-		responseWriter.WriteHeader(http.StatusBadRequest)
-		return
+		log.Fatal("unable to convert todo object ot json")
 	}
 	responseWriter.WriteHeader(http.StatusOK)
 	responseWriter.Write(res)
 }
 
 func UpdateTodo(responseWriter http.ResponseWriter, request *http.Request) {
+	responseWriter.Header().Set("Content-Type", "application/json")
 
+	todoId, err := strconv.ParseInt(mux.Vars(request)[fmt.Sprint(params.TodoId)], 0, 0)
+	if err != nil {
+		responseWriter.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	body, err := io.ReadAll(request.Body)
+	if err != nil {
+		responseWriter.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	todo, err := database.TodoDatabase.GetTodo(todoId)
+	if err != nil {
+		responseWriter.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if err := json.Unmarshal(body, &todo); err != nil {
+		log.Fatal("unable to parse json into todo object")
+	}
+
+	database.TodoDatabase.UpdateTodo(todoId, todo)
+
+	res, _ := json.Marshal(todo)
+	responseWriter.WriteHeader(http.StatusOK)
+	responseWriter.Write(res)
 }
 
 func DeleteTodo(responseWriter http.ResponseWriter, request *http.Request) {
+	responseWriter.Header().Set("Content-Type", "application/json")
 
+	todoId, err := strconv.ParseInt(mux.Vars(request)[fmt.Sprint(params.TodoId)], 0, 0)
+	if err != nil {
+		responseWriter.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	todo, err := database.TodoDatabase.GetTodo(todoId)
+	if err != nil {
+		responseWriter.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	database.TodoDatabase.DeleteTodo(todoId)
+
+	res, _ := json.Marshal(todo)
+	responseWriter.WriteHeader(http.StatusOK)
+	responseWriter.Write(res)
 }
