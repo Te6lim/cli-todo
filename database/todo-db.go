@@ -6,15 +6,17 @@ import (
 	"github.com/te6lim/whattodo/models"
 )
 
-type TodoDb struct {
+type todoDb struct {
 	db []models.Todo
 }
 
-func (database *TodoDb) InsertTodo(todo models.Todo) {
+var TodoDatabase = todoDb{}
+
+func (database *todoDb) InsertTodo(todo models.Todo) {
 	database.db = append(database.db, todo)
 }
 
-func (database *TodoDb) DeleteTodo(id int64) {
+func (database *todoDb) DeleteTodo(id int64) {
 	for i := 0; i < len(database.db); i++ {
 		if int64(i) == id {
 			database.db = append(database.db[0:i], database.db[i+1:]...)
@@ -23,7 +25,7 @@ func (database *TodoDb) DeleteTodo(id int64) {
 	}
 }
 
-func (database *TodoDb) UpdateTodo(id int64, todo models.Todo) {
+func (database *todoDb) UpdateTodo(id int64, todo models.Todo) {
 	for i := 0; i < len(database.db); i++ {
 		if int64(i) == id {
 			database.db = append(database.db[0:i], database.db[i+1:]...)
@@ -33,7 +35,7 @@ func (database *TodoDb) UpdateTodo(id int64, todo models.Todo) {
 	}
 }
 
-func (database *TodoDb) GetTodo(id int64) (models.Todo, error) {
+func (database *todoDb) GetTodo(id int64) (models.Todo, error) {
 	for i := 0; i < len(database.db); i++ {
 		if int64(i) == id {
 			return database.db[id], nil
@@ -42,6 +44,6 @@ func (database *TodoDb) GetTodo(id int64) (models.Todo, error) {
 	return models.Todo{}, errors.New("no such object")
 }
 
-func (database *TodoDb) GetAllTodos() []models.Todo {
+func (database *todoDb) GetAllTodos() []models.Todo {
 	return database.db
 }
