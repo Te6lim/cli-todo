@@ -9,9 +9,9 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/te6lim/whattodo/controllers/params"
-	"github.com/te6lim/whattodo/database"
-	"github.com/te6lim/whattodo/models"
+	"github.com/te6lim/cli-todo/controllers/params"
+	"github.com/te6lim/cli-todo/database"
+	"github.com/te6lim/cli-todo/models"
 )
 
 func GetAllTodos(responseWriter http.ResponseWriter, request *http.Request) {

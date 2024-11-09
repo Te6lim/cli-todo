@@ -3,7 +3,7 @@ package database
 import (
 	"errors"
 
-	"github.com/te6lim/whattodo/models"
+	"github.com/te6lim/cli-todo/models"
 )
 
 type todoDb struct {

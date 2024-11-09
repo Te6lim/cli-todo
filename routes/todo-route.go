@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/te6lim/whattodo/controllers"
-	"github.com/te6lim/whattodo/controllers/params"
+	"github.com/te6lim/cli-todo/controllers"
+	"github.com/te6lim/cli-todo/controllers/params"
 )
 
 func RegisterTodoRoutes(router *mux.Router) {

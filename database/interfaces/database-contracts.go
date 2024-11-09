@@ -1,7 +1,7 @@
 package interfaces
 
 import(
-	"github.com/te6lim/whattodo/models"
+	"github.com/te6lim/cli-todo/models"
 )
 
 type TodoStorage interface {

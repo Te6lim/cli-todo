@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/te6lim/whattodo/routes"
+	"github.com/te6lim/cli-todo/routes"
 )
 
 func main() {
