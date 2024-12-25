@@ -9,7 +9,6 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/te6lim/cli-todo/controllers/params"
 	"github.com/te6lim/cli-todo/database"
 	"github.com/te6lim/cli-todo/models"
 )
@@ -24,7 +23,7 @@ func GetAllTodos(responseWriter http.ResponseWriter, request *http.Request) {
 
 func GetTodo(responseWriter http.ResponseWriter, request *http.Request) {
 	parameters := mux.Vars(request)
-	todoId, err := strconv.ParseInt(parameters[params.TodoId], 0, 0)
+	todoId, err := strconv.ParseInt(parameters[TodoId], 0, 0)
 	if err != nil {
 		responseWriter.WriteHeader(http.StatusBadRequest)
 		return
@@ -67,7 +66,7 @@ func CreateTodo(responseWriter http.ResponseWriter, request *http.Request) {
 func UpdateTodo(responseWriter http.ResponseWriter, request *http.Request) {
 	responseWriter.Header().Set("Content-Type", "application/json")
 
-	todoId, err := strconv.ParseInt(mux.Vars(request)[fmt.Sprint(params.TodoId)], 0, 0)
+	todoId, err := strconv.ParseInt(mux.Vars(request)[fmt.Sprint(TodoId)], 0, 0)
 	if err != nil {
 		responseWriter.WriteHeader(http.StatusBadRequest)
 		return
@@ -97,7 +96,7 @@ func UpdateTodo(responseWriter http.ResponseWriter, request *http.Request) {
 func DeleteTodo(responseWriter http.ResponseWriter, request *http.Request) {
 	responseWriter.Header().Set("Content-Type", "application/json")
 
-	todoId, err := strconv.ParseInt(mux.Vars(request)[fmt.Sprint(params.TodoId)], 0, 0)
+	todoId, err := strconv.ParseInt(mux.Vars(request)[fmt.Sprint(TodoId)], 0, 0)
 	if err != nil {
 		responseWriter.WriteHeader(http.StatusBadRequest)
 		return
